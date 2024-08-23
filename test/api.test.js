@@ -42,6 +42,11 @@ describe("GET /", () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body.length, initialBlogs.length);
   });
+  test("shuld be returm id", async ()=>{
+    const response = await api.get("/api/blogs");
+    assert.strictEqual(response.body[0].hasOwnProperty("id"), true);
+  });
+
 });
 
 after(async () => {
