@@ -4,18 +4,13 @@ const Blog = require("../models/blog");
 
 blogRouter.get("/", async (req, res, next) => {
   const blogs = await Blog.find({});
- try {
-    res.json(blogs);
-  } catch (error) {
-    next(error);
-  }
+  res.json(blogs);
 });
 
-blogRouter.post("/", (req, res) => {
+blogRouter.post("/", async (req, res, next) => {
   const blog = new Blog(req.body);
-  blog.save().then((result) => {
-    res.status(201).json(result);
-  });
+  const newBlog = await blog.save();
+  res.status(201).json(newBlog);
 });
 
 module.exports = blogRouter;

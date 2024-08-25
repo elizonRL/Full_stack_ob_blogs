@@ -42,11 +42,21 @@ describe("GET /", () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body.length, initialBlogs.length);
   });
-  test("shuld be returm id", async ()=>{
+  test("shuld be returm id", async () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body[0].hasOwnProperty("id"), true);
   });
-
+  test("shuld be add new blog", async () => {
+    const newBlog = {
+      title: "Cómo inicializar Array con valores en JavaScript",
+      author: "midudev",
+      url: "https://midu.dev/inicializar-array-con-valores/",
+      likes: 45,
+    };
+    await api.post("/api/blogs").send(newBlog).expect(201);
+    const response = await api.get("/api/blogs");
+    assert.strictEqual(response.body.length, initialBlogs.length + 1);
+  });
 });
 
 after(async () => {
