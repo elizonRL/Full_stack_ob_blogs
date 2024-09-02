@@ -57,6 +57,10 @@ describe("GET /", () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body.length, initialBlogs.length + 1);
   });
+  test("Shuld be retur a property like", async () => {
+    const response = await api.get("/api/blogs");
+    assert.strictEqual(response.body[0].hasOwnProperty("likes"), true);
+  });
 });
 
 after(async () => {
