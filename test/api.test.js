@@ -61,6 +61,18 @@ describe("GET /", () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body[0].hasOwnProperty("likes"), true);
   });
+  test("Shuld be retur a property url", async () => {
+    const response = await api.get("/api/blogs");
+    assert.strictEqual(response.body[0].hasOwnProperty("url"), true);
+  });
+  test("Shuld be retur a property title", async () => {
+    const response = await api.get("/api/blogs");
+    assert.strictEqual(response.body[0].hasOwnProperty("title"), true);
+  });
+  test("shuld be retun delete 1 ", ()=>{
+   const response =  api.delete("/api/blogs/1").expect(204)
+   assert.strictEqual(response.body.length, initialBlogs.length - 1)
+  })
 });
 
 after(async () => {
