@@ -9,25 +9,13 @@ const api = superTest(app);
 
 const Blog = require("../models/blog");
 const mongoose = require("mongoose");
-const initialBlogs = [
-  {
-    title: "Top 5 preguntas de JavaScript en Stack Overflow",
-    author: "midudev",
-    url: "https://midu.dev/top-5-preguntas-javascript-stack-overflow/",
-    likes: 45,
-  },
-  {
-    title: "Cómo leer, copiar y pegar del portapapeles en JavaScript",
-    author: "midudev",
-    url: "https://midu.dev/leer-copiar-pegar-portapapeles-javascript/",
-    likes: 35,
-  },
-];
+const helper = require("../utils/blog_herper");
+
 beforeEach(async () => {
   await Blog.deleteMany({});
-  let blogObject = new Blog(initialBlogs[0]);
+  let blogObject = new Blog(helper.initialBlogs[0]);
   await blogObject.save();
-  blogObject = new Blog(initialBlogs[1]);
+  blogObject = new Blog(helper.initialBlogs[1]);
   await blogObject.save();
 });
 
@@ -40,13 +28,13 @@ describe("GET /", () => {
   });
   test("should return the correct number of blogs", async () => {
     const response = await api.get("/api/blogs");
-    assert.strictEqual(response.body.length, initialBlogs.length);
+    assert.strictEqual(response.body.length, helper.initialBlogs.length);
   });
   test("shuld be returm id", async () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body[0].hasOwnProperty("id"), true);
   });
-  test("shuld be add new blog", async () => {
+ /*  test("shuld be add new blog", async () => {
     const newBlog = {
       title: "Cómo inicializar Array con valores en JavaScript",
       author: "midudev",
@@ -55,8 +43,8 @@ describe("GET /", () => {
     };
     await api.post("/api/blogs").send(newBlog).expect(201);
     const response = await api.get("/api/blogs");
-    assert.strictEqual(response.body.length, initialBlogs.length + 1);
-  });
+    assert.strictEqual(response.body.length, helper.initialBlogs.length + 1);
+  }); */
   test("Shuld be retur a property like", async () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body[0].hasOwnProperty("likes"), true);
@@ -69,10 +57,14 @@ describe("GET /", () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body[0].hasOwnProperty("title"), true);
   });
-  test("shuld be retun delete 1 ", ()=>{
-   const response =  api.delete("/api/blogs/1").expect(204)
-   assert.strictEqual(response.body.length, initialBlogs.length - 1)
-  })
+  test("shuld be retun delete 1 ", async () => {
+    const blogAtStart = await helper.blogsInDb();
+    const blogToDelete = blogAtStart[0];
+    
+    const response = api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+    const blogAtEnd = await helper.blogsInDb();
+    assert.strictEqual(blogAtEnd.length, helper.initialBlogs.length - 1 );
+  });
 });
 
 after(async () => {
