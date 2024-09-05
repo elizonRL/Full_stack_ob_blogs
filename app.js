@@ -7,6 +7,7 @@ const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
 require("express-async-errors");
 const blogRouter = require("./controllers/blog");
+const userRouter = require("./controllers/user");
 
 mongoose.set("strictQuery", false);
 
@@ -25,6 +26,7 @@ mongoose
   });
 
 app.use("/api/blogs", blogRouter);
+app.use("/api/users", userRouter);
 
 app.use(middleware.errorHandler);
 app.use(middleware.unknownEndpoint);
