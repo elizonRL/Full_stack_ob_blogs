@@ -17,14 +17,14 @@ const initialBlogs = [
 ]
 const initialUsers = [
   {
-    username: 'Eliz',
+    username: 'Elizo',
     name: 'elizon Rodriguez',
-    password: 'elizon'
+    passwordHash: 'elizon'
   },
   {
     username: 'dani',
     name: 'daniel',
-    password: 'pedro'
+    passwordHash: 'pedro'
   }
 ]
 

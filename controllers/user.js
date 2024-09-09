@@ -5,18 +5,17 @@ const config = require('../utils/config')
 
 // eslint-disable-next-line no-unused-vars
 
-userRouter.post('/', async (request, response) => {
+userRouter.post('/', async (request, response, next) => {
   const { username, name, password } = request.body
-  console.log(typeof config.SECRE_ROUNDS)
+
   const passwordHash = await bcrypt.hash(password, config.SECRE_ROUNDS)
   const user = new User({
     username,
     name,
     passwordHash
-  })
-
+  }
+)
   const savedUser = await user.save()
-
   response.status(201).json(savedUser)
 })
 
