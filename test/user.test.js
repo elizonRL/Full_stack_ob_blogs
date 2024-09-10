@@ -88,6 +88,18 @@ describe('test Errors of users', () => {
     const userAtEnd = await blogHelper.usersInDb()
     assert.strictEqual(userAtEnd.length, userAtStart.length)
   })
+  test('test password minlength +3', async () => {
+    const userAtStart = await blogHelper.usersInDb()
+    await api.post('/api/users')
+      .send({
+        username: 'XXXXXX',
+        name: 'elizon Rodriguez',
+        password: '12'
+      })
+      .expect(400)
+    const userAtEnd = await blogHelper.usersInDb()
+    assert.strictEqual(userAtEnd.length, userAtStart.length)
+  })
 })
 
 after(async () => {
