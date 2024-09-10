@@ -7,6 +7,9 @@ const config = require('../utils/config')
 
 userRouter.post('/', async (request, response, next) => {
   const { username, name, password } = request.body
+  if (!password || !username) {
+    return response.status(400).json({ error: 'password or user is required' })
+  }
 
   const passwordHash = await bcrypt.hash(password, config.SECRE_ROUNDS)
   const user = new User({
@@ -14,7 +17,7 @@ userRouter.post('/', async (request, response, next) => {
     name,
     passwordHash
   }
-)
+  )
   const savedUser = await user.save()
   response.status(201).json(savedUser)
 })

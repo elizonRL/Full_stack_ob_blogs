@@ -39,7 +39,7 @@ const usersInDb = async () => {
 
 module.exports = {
   initialBlogs,
-  blogsInDb,
   initialUsers,
+  blogsInDb,
   usersInDb
 }
