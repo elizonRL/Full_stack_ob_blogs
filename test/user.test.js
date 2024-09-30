@@ -45,7 +45,7 @@ describe('test Errors of users', () => {
 
     await api.post('/api/users')
       .send({
-        username: 'Elizo',
+        username: 'Elizon',
         name: 'elizon Rodriguez',
         password: '123456'
       })

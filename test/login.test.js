@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const User = require('../models/user')
 const helper = require('../utils/blog_herper')
 
-const api = superTest(app);
+const api = superTest(app)
 
 const user = {
   username: 'Elizon',
