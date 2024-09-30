@@ -16,11 +16,11 @@ const initialBlogs = [
     likes: 35
   }
 ]
-const initialUsers =  [
+const initialUsers = [
   {
     username: 'Elizon',
     name: 'elizon Rodriguez',
-    passwordHash:  bcrypt.hashSync('elizon', 10)
+    passwordHash: bcrypt.hashSync('elizon', 10)
   },
   {
     username: 'dani',

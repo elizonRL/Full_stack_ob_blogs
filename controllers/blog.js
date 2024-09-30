@@ -1,4 +1,3 @@
-
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
@@ -14,7 +13,6 @@ const getTokenFrom = request => {
 }
 
 blogRouter.get('/', async (req, res, next) => {
-
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1, id: 1 })
   res.json(blogs)
 })
